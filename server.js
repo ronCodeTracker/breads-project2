@@ -20,6 +20,8 @@ app.set('view engine', 'jsx')
 app.engine('jsx', require('express-react-views').createEngine())
 // MIDDLEWARE
 app.use(express.static('public'))
+// MIDDLEWARE
+app.use(express.urlencoded({ extended: true }))
 
 // ROUTES
 app.get('/', (req, res) => {
@@ -34,13 +36,15 @@ app.use('/breads', breadsController)
 
 
 // 404 Page
+
 app.get('*', (req, res) => {
-    res.send('404')
+    res.send('404404')
 })
+
 
 // LISTEN
 app.listen(PORT, () => {
-    console.log('nomming at port', PORT);
+    console.log('Nomming at port', PORT);
 })
 
 
