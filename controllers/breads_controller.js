@@ -43,12 +43,6 @@ breads.get('/new', (req, res) => {
 })
 
 
-// DELETE
-breads.delete('/:indexArray', (req, res) => {
-    console.log('delete working')
-    Bread.splice(req.params.indexArray, 1)
-    res.status(303).redirect('/breads')
-})
 
 
 // SHOW
@@ -61,6 +55,14 @@ breads.get('/:arrayIndex', (req, res) => {
     } else {
         res.send('404?')
     }
+})
+
+
+// DELETE
+breads.delete('/:indexArray', (req, res) => {
+    console.log('delete working')
+    Bread.splice(req.params.indexArray, 1)
+    res.status(303).redirect('/breads')
 })
 
 
