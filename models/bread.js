@@ -11,8 +11,22 @@ const { Schema } = mongoose
 const breadSchema = new Schema({
     name: { type: String, required: true },
     hasGluten: String,
-    image: { type: String, default: 'http://placehold.it/500x500.png' }
+    image: {
+        type: String, default: 'https://www.bing.com/th?id=OIP.CWnGmX6OTYSUMNPWa6FSmAHaE8&w' +
+            '=306&h=204&c=8&rs=1&qlt=90&o=6&dpr=1.5&pid=3.1&rm=2'
+    },
+    baker: {
+        type: String,
+        enum: ['Rachel', 'Monica', 'Joey', 'Chandler', 'Ross', 'Phoebe']
+    }
 })
+
+
+// helper methods 
+breadSchema.methods.getBakedBy = function () {
+    return `${this.name} was baked with love by ${this.baker}`
+}
+
 
 const Bread = mongoose.model('Bread', breadSchema)
 
