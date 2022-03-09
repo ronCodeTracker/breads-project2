@@ -8,21 +8,32 @@ const Bread = require('../models/bread.js')
 
 // INDEX
 breads.get('/', (req, res) => {
-    res.render('Index',
-        {
-            breads: Bread,
-            title: 'Index Page'
-        }
-    )
+    Bread.find()
+        .then(foundBreads => {
+            res.render('Index',
+                {
+                    breads: foundBreads,
+                    title: 'Index Page'
+                }
+            )
+        })
+    
     // res.send(Bread)
 })
 
 // EDIT
-breads.get('/:indexArray/edit', (req, res) => {
-    res.render('edit', {
-        bread: Bread[req.params.indexArray],
-        index: req.params.indexArray
-    })
+breads.get('/:id/edit', (req, res) => {
+    const bread = Bread.findById(req.params.id)
+        .then(bread => {
+            console.log(bread)
+            res.render('edit', {
+                bread: bread
+                
+            })
+        }).catch(err => {
+            res.send('404')
+        })
+    
 })
 
 
@@ -30,16 +41,14 @@ breads.get('/:indexArray/edit', (req, res) => {
 breads.post('/', (req, res) => {
     console.log(req.body)
     if (!req.body.image) {
-        req.body.image = 'https://images.unsplash.com/photo-1517686469429' +
-            '-8bdb88b9f907?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib' +
-            '=rb-1.2.1&auto=format&fit=crop&w=1050&q=80'
+        req.body.image = undefined
     }
   if(req.body.hasGluten === 'on') {
     req.body.hasGluten === 'true'
   } else {
     req.body.hasGlutten === 'false'
   }
-  Bread.push(req.body)
+  Bread.create(req.body)
   res.redirect('/breads')
 })
 
@@ -53,15 +62,23 @@ breads.get('/new', (req, res) => {
 
 
 // SHOW
-breads.get('/:arrayIndex', (req, res) => {
-    if (Bread[req.params.arrayIndex]) {
-        res.render('Show', {
-            bread: Bread[req.params.arrayIndex],
-            index: req.params.arrayIndex
-        })
-    } else {
-        res.send('404?')
-    }
+breads.get('/:id', (req, res) => {
+    const bread = Bread.findById(req.params.id)
+        .then(bread => {
+            console.log(bread)
+            res.render('Show', {bread: bread})
+        }).catch(err => {
+            res.send('404')
+        });
+
+    //if (Bread[req.params.arrayIndex]) {
+    //    res.render('Show', {
+    //        bread: Bread[req.params.arrayIndex],
+    //        index: req.params.arrayIndex
+    //    })
+    //} else {
+    //    res.send('404?')
+    //}
 })
 
 
@@ -73,13 +90,13 @@ breads.delete('/:indexArray', (req, res) => {
 })
 
 // UPDATE
-breads.put('/:arrayIndex', (req, res) => {
+breads.put('/:id', (req, res) => {
     if (req.body.hasGluten === 'on') {
         req.body.hasGluten = true
     } else {
         req.body.hasGluten = false
     }
-    Bread[req.params.arrayIndex] = req.body
+    Bread.updateOne().then(() => res.redirect(`/breads/${req.params.id}`))
     res.redirect(`/breads/${req.params.arrayIndex}`)
 })
 

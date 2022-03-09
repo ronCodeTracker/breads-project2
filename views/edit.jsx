@@ -7,11 +7,12 @@ const Default = require('./layouts/Default')
 
 
 
-function Edit({ bread, index }) {
+function Edit({ bread }) {
     return (
         <Default>
             <h2>Edit a bread</h2>
-            <form action={`/breads/${index}?_method=PUT`} method="POST">
+            {console.log(bread.id)}
+            <form action={`/breads/${bread.id}?_method=PUT`} method="POST">
                 <label htmlFor="name">Name</label>
                 <input
                     type="text"
