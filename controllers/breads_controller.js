@@ -5,6 +5,7 @@
 const express = require('express')
 const breads = express.Router()
 const Bread = require('../models/bread.js')
+const Baker = require('../models/baker.js')
 
 // INDEX
 breads.get('/', (req, res) => {
@@ -61,8 +62,13 @@ breads.post('/', (req, res) => {
 
 // NEW
 breads.get('/new', (req, res) => {
-    console.log('newConsole')
-    res.render('new')
+    Baker.find()
+        .then(foundBakers => {
+            console.log(foundBakers)
+            res.render('new', {
+                bakers: foundBakers
+            })
+        })
 })
 
 
@@ -70,13 +76,13 @@ breads.get('/new', (req, res) => {
 
 // SHOW
 breads.get('/:id', (req, res) => {
-    const bread = Bread.findById(req.params.id)
-        .then(bread => {
+    Bread.findById(req.params.id)
+        .then(foundBread => {
             //console.log(bread.getBakedBy)
-            const bakedBy = bread.getBakedBy()
-            console.log(bakedBy)
-            console.log(bread)
-            res.render('Show', {bread: bread})
+           const bakedBy = foundBread.getBakedBy()
+           console.log(bakedBy)
+            console.log(foundBread)
+            res.render('Show', {bread: foundBread})
         }).catch(err => {
             res.send('404')
         });

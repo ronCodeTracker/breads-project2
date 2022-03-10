@@ -14,7 +14,7 @@ function Show({ bread }) {
             <p>
                 and it
                 {
-                    bread.hasGluten
+                   bread.hasGluten
                         ? <span> does </span>
                         : <span> does NOT </span>
                 }
