@@ -77,6 +77,7 @@ breads.get('/new', (req, res) => {
 // SHOW
 breads.get('/:id', (req, res) => {
     Bread.findById(req.params.id)
+        .populate('baker')
         .then(foundBread => {
             //console.log(bread.getBakedBy)
            const bakedBy = foundBread.getBakedBy()
@@ -84,6 +85,7 @@ breads.get('/:id', (req, res) => {
             console.log(foundBread)
             res.render('Show', {bread: foundBread})
         }).catch(err => {
+            console.log(err)
             res.send('404')
         });
 
