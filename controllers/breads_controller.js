@@ -23,20 +23,23 @@ breads.get('/', (req, res) => {
 })
 
 // EDIT
+// EDIT
 breads.get('/:id/edit', (req, res) => {
-    const bread = Bread.findById(req.params.id)
-        .then(bread => {
-            console.log(bread)
-            res.render('edit', {
-                bread: bread
-                
-            })
+    Baker.find()
+        .then(foundBakers => {
+            Bread.findById(req.params.id)
+                .then(foundBread => {
+                    res.render('edit', {
+                        bread: foundBread,
+                        bakers: foundBakers
+                    })
+                })
         }).catch(err => {
+            console.log(err)
             res.send('404')
-        })
-    
-})
 
+        })
+})
 
 // CREATE
 breads.post('/', (req, res) => {
