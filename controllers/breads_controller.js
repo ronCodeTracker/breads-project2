@@ -9,15 +9,21 @@ const Baker = require('../models/baker.js')
 
 // INDEX
 breads.get('/', (req, res) => {
-    Bread.find()
-        .then(foundBreads => {
-            res.render('Index',
-                {
-                    breads: foundBreads,
-                    title: 'Index Page'
-                }
-            )
+    Baker.find()
+        .then(foundBakers => {
+            Bread.find()
+                .then(foundBreads => {
+                    res.render('Index',
+                        {
+                            breads: foundBreads,
+                            bakers: foundBakers,
+                            title: 'Index Page'
+
+                        }
+                    )
+                })
         })
+    
     
     // res.send(Bread)
 })
