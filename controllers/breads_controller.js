@@ -8,6 +8,7 @@ const Bread = require('../models/bread.js')
 const Baker = require('../models/baker.js')
 
 // INDEX
+/*
 breads.get('/', (req, res) => {
     Baker.find()
         .then(foundBakers => {
@@ -23,10 +24,26 @@ breads.get('/', (req, res) => {
                     )
                 })
         })
-    
-    
-    // res.send(Bread)
+
+
 })
+    
+   */
+
+breads.get('/', async (req, res) => {
+    const foundBakers = await Baker.find()
+    const foundBreads = await Bread.find().limit(2)
+    //console.log('foundBread' + foundBreads)
+    res.render('index', {
+        breads: foundBreads,
+        bakers: foundBakers,
+        title: 'Index Page'
+    })
+})
+
+
+   
+
 
 // EDIT
 // EDIT
