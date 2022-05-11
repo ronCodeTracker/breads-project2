@@ -22,7 +22,7 @@ const PORT = process.env.PORT
 //Mongoose ODM
 const mongoose = require('mongoose')
 mongoose.connect("mongodb+srv://new-user35:VccVccpw@clusterbootc.3unew.mongodb.net/breadcrud", { useNewUrlParser: true, useUnifiedTopology: true },
-    () => { console.log('connected to mongo: ', process.env.MONGO_URI) }
+    () => { console.log('connected to mongo: ', "mongodb+srv://new-user35:VccVccpw@clusterbootc.3unew.mongodb.net/breadcrud") }
 )
 
 
