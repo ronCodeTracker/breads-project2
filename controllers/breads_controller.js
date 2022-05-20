@@ -109,7 +109,7 @@ breads.get('/:id', (req, res) => {
            const bakedBy = foundBread.getBakedBy()
            console.log(bakedBy)
             console.log(foundBread)
-            res.render('Show', {bread: foundBread})
+            res.render('show', {bread: foundBread})
         }).catch(err => {
             console.log(err)
             res.send('404')
